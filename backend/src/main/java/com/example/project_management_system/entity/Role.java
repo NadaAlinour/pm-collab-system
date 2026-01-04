@@ -1,10 +1,17 @@
 package com.example.project_management_system.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
+@ToString
 @Entity
 public class Role
 {

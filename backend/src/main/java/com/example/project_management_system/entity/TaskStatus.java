@@ -1,7 +1,14 @@
 package com.example.project_management_system.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 @Entity
 public class TaskStatus
 {
