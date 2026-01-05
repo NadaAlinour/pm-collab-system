@@ -7,7 +7,8 @@ import com.example.project_management_system.entity.Users;
 import com.example.project_management_system.repository.RoleRepository;
 import com.example.project_management_system.repository.TenantRepository;
 import com.example.project_management_system.repository.UserRepository;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.jspecify.annotations.Nullable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -18,11 +19,14 @@ public class SignupService
     private final UserRepository userRepo;
     private final RoleRepository roleRepo;
 
-    public SignupService(TenantRepository tenantRepo, UserRepository userRepo, RoleRepository roleRepo)
+    private final PasswordEncoder passwordEncoder;
+
+    public SignupService(TenantRepository tenantRepo, UserRepository userRepo, RoleRepository roleRepo, PasswordEncoder passwordEncoder)
     {
         this.tenantRepo = tenantRepo;
         this.userRepo = userRepo;
         this.roleRepo = roleRepo;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -40,10 +44,8 @@ public class SignupService
         Role createdRole = roleRepo.saveAndFlush(role);
 
         // create new user
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
-        Users user = new Users(dto.getEmail(), encoder.encode(dto.getPassword()), createdTenant, createdRole);
+        Users user = new Users(dto.getEmail(), passwordEncoder.encode(dto.getPassword()), createdTenant, createdRole);
         userRepo.saveAndFlush(user);
-
         return createdTenant;
     }
 
