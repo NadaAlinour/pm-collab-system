@@ -47,7 +47,6 @@ public class SignupService
         System.out.println("CREATED USER: " + createdUser);
 
         return createdTenant;
-
     }
 
 
