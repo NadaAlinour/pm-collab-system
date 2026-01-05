@@ -57,11 +57,12 @@ public class Users
 
     // a role-less constructor for the first user of a tenant
     // since no roles would have been created for this new tenant yet until its creation
-    public Users(String email, String password, Tenant tenant)
+    public Users(String email, String password, Tenant tenant, Role role)
     {
         this.email = email;
         this.password = password;
         this.tenant = tenant;
+        this.role = role;
     }
 
     public Users(String firstname, String lastname, String email, String password, Tenant tenant, Role role) {
