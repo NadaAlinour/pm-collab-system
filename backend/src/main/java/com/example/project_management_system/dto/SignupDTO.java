@@ -11,5 +11,4 @@ public class SignupDTO {
     private String lastname;
     private String email;
     private String password;
-    private Role role; // should default to admin and i think i will handle this in the signupgit s service
 }
