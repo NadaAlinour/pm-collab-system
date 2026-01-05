@@ -1,14 +1,20 @@
 package com.example.project_management_system.dto;
 
-import com.example.project_management_system.entity.Role;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class SignupDTO {
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserSignupDTO {
     private String firstname;
     private String lastname;
     private String email;
     private String password;
 }
+
+
+
