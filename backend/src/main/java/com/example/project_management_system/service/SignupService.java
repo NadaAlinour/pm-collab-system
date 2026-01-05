@@ -7,11 +7,10 @@ import com.example.project_management_system.entity.Users;
 import com.example.project_management_system.repository.RoleRepository;
 import com.example.project_management_system.repository.TenantRepository;
 import com.example.project_management_system.repository.UserRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-// so generally what we want is for the tenant to signup
-// and on signup we create a user with role admin
-// should probably seed the role table with admin?
+
 @Service
 public class SignupService
 {
@@ -41,10 +40,9 @@ public class SignupService
         Role createdRole = roleRepo.saveAndFlush(role);
 
         // create new user
-        // raw password just for initial testing
-        Users user = new Users(dto.getEmail(), dto.getPassword(), createdTenant, createdRole);
-        Users createdUser = userRepo.saveAndFlush(user);
-        System.out.println("CREATED USER: " + createdUser);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
+        Users user = new Users(dto.getEmail(), encoder.encode(dto.getPassword()), createdTenant, createdRole);
+        userRepo.saveAndFlush(user);
 
         return createdTenant;
     }
