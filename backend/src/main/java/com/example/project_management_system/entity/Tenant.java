@@ -26,7 +26,7 @@ public class Tenant
     private List<Project> projects = new ArrayList<>();
 
 
-    protected Tenant() {}
+    public Tenant() {}
     public Tenant(String name)
     {
         this.name = name;
