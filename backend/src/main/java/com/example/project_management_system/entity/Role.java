@@ -21,17 +21,12 @@ public class Role
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tenant_id")
-    private Tenant tenant;
-
     @OneToMany(mappedBy = "role")
     private List<Users> users = new ArrayList<>();
 
     protected Role() {}
-    public Role(Tenant tenant, String name)
+    public Role(String name)
    {
-       this.tenant = tenant;
        this.name = name;
    }
 }

@@ -17,30 +17,33 @@ public class RoleService
         this.roleRepo = roleRepo;
     }
 
-    // what happens if db fails? what message gets returned?
-    // add role, with perms later
     public Role addRole(Role role)
     {
         return roleRepo.saveAndFlush(role);
     }
 
     // update role
-    public Role updateRole(Role role)
+    /*
+    public Role updateRole(Long roleId, String roleName)
     {
-        return roleRepo.save(role);
+        Role existingRole = roleRepo.findById(roleId).orElseThrow(() -> new RuntimeException("role not found"));
+        existingRole.setName(roleName);
+        return roleRepo.save(existingRole);
     }
+    */
 
 
     // delete role
-    public void deleteRole(Role role)
+    public Role deleteRole(Role role)
     {
         roleRepo.delete(role);
+        return role;
     }
 
-    // get all roles by tenant id
-    public List<Role> getRoles(Long tenantId)
+    // get all roles
+    public List<Role> getRoles()
     {
-        return roleRepo.findByTenant(tenantId);
+        return roleRepo.findAll();
     }
 
 }

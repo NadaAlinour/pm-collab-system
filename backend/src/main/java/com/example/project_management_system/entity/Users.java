@@ -18,10 +18,10 @@ public class Users
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String firstname;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String lastname;
 
     @Column(nullable = false, unique = true)
@@ -54,16 +54,6 @@ public class Users
 
 
     protected Users() {}
-
-    // a role-less constructor for the first user of a tenant
-    // since no roles would have been created for this new tenant yet until its creation
-    public Users(String email, String password, Tenant tenant, Role role)
-    {
-        this.email = email;
-        this.password = password;
-        this.tenant = tenant;
-        this.role = role;
-    }
 
     public Users(String firstname, String lastname, String email, String password, Tenant tenant, Role role) {
         this.firstname = firstname;

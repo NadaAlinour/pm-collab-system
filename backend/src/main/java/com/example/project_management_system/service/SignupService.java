@@ -7,7 +7,6 @@ import com.example.project_management_system.entity.Users;
 import com.example.project_management_system.repository.RoleRepository;
 import com.example.project_management_system.repository.TenantRepository;
 import com.example.project_management_system.repository.UserRepository;
-import org.jspecify.annotations.Nullable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -39,12 +38,11 @@ public class SignupService
         Tenant tenant = new Tenant(dto.getName());
         Tenant createdTenant = tenantRepo.saveAndFlush(tenant);
 
-        // create an admin role
-        Role role = new Role(createdTenant, "admin");
-        Role createdRole = roleRepo.saveAndFlush(role);
+        // retrieve admin role
+        Role adminRole = roleRepo.getRoleByName("admin");
 
-        // create new user
-        Users user = new Users(dto.getEmail(), passwordEncoder.encode(dto.getPassword()), createdTenant, createdRole);
+        // create new user with admin role
+        Users user = new Users(dto.getEmail(), passwordEncoder.encode(dto.getPassword()), createdTenant, adminRole);
         userRepo.saveAndFlush(user);
         return createdTenant;
     }
