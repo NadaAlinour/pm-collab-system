@@ -1,7 +1,6 @@
 package com.example.project_management_system.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,7 +13,7 @@ import java.util.Date;
 @Setter
 @ToString
 @Entity
-public class Task
+public class Ticket
 {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -46,21 +45,21 @@ public class Task
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private TaskCategory category;
+    private TicketCategory category;
 
     @ManyToOne
     @JoinColumn(name = "status_id")
-    private TaskStatus status;
+    private TicketStatus status;
 
     @Enumerated(EnumType.STRING)
     private Priority priority = Priority.MEDIUM;
 
 
-    protected Task() {}
+    protected Ticket() {}
 
-    public Task(String title, String description, Users createdBy, Users assignedTo,
-                Instant createdAt, Date dueDate, Project project, TaskCategory category,
-                TaskStatus status, Priority priority) {
+    public Ticket(String title, String description, Users createdBy, Users assignedTo,
+                  Instant createdAt, Date dueDate, Project project, TicketCategory category,
+                  TicketStatus status, Priority priority) {
         this.title = title;
         this.description = description;
         this.createdBy = createdBy;

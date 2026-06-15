@@ -47,10 +47,10 @@ public class Users
     private Role role;
 
     @OneToMany(mappedBy = "createdBy")
-    private List<Task> createdTasks = new ArrayList<>();
+    private List<Ticket> createdTickets = new ArrayList<>();
 
     @OneToMany(mappedBy = "assignedTo")
-    private List<Task> assignedTasks = new ArrayList<>();
+    private List<Ticket> assignedTickets = new ArrayList<>();
 
 
     protected Users() {}

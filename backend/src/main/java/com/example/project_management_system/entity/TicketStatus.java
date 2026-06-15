@@ -1,7 +1,6 @@
 package com.example.project_management_system.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -10,7 +9,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-public class TaskStatus
+public class TicketStatus
 {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,8 +21,8 @@ public class TaskStatus
     @JoinColumn(name = "project_id")
     private Project project;
 
-    protected TaskStatus() {}
-    public TaskStatus(Project project, String name)
+    protected TicketStatus() {}
+    public TicketStatus(Project project, String name)
     {
         this.project = project;
         this.name = name;

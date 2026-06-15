@@ -1,7 +1,6 @@
 package com.example.project_management_system.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -31,13 +30,13 @@ public class Project
     private Set<Users> users = new HashSet<>();
 
     @OneToMany(mappedBy = "project")
-    private List<Task> tasks = new ArrayList<>();
+    private List<Ticket> tickets = new ArrayList<>();
 
     @OneToMany(mappedBy = "project")
-    private List<TaskStatus> statuses = new ArrayList<>();
+    private List<TicketStatus> statuses = new ArrayList<>();
 
     @OneToMany(mappedBy = "project")
-    private List<TaskCategory> categories = new ArrayList<>();
+    private List<TicketCategory> categories = new ArrayList<>();
 
     protected Project() {}
     public Project(String name, Tenant tenant)
