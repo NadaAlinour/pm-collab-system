@@ -9,7 +9,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-public class TicketCategory
+public class Category
 {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,14 +17,9 @@ public class TicketCategory
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "project_id")
-    private Project project;
-
-    protected TicketCategory() {}
-    public TicketCategory(Project project, String name)
+    protected Category() {}
+    public Category(String name)
     {
-        this.project = project;
         this.name = name;
     }
 }

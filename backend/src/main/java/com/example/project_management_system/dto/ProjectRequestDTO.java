@@ -7,12 +7,11 @@ import lombok.Setter;
 
 import java.util.List;
 
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProjectResponseDTO {
-    private Long id;
+public class ProjectRequestDTO {
+    private Long tenantId;
     private String name;
 }

@@ -39,17 +39,18 @@ public class Ticket
     @Column(name = "due_date")
     private Date dueDate;
 
+
     @ManyToOne
-    @JoinColumn(name = "project_id")
+    @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private TicketCategory category;
+    private Category category;
 
     @ManyToOne
     @JoinColumn(name = "status_id")
-    private TicketStatus status;
+    private Status status;
 
     @Enumerated(EnumType.STRING)
     private Priority priority = Priority.MEDIUM;
@@ -58,8 +59,8 @@ public class Ticket
     protected Ticket() {}
 
     public Ticket(String title, String description, Users createdBy, Users assignedTo,
-                  Instant createdAt, Date dueDate, Project project, TicketCategory category,
-                  TicketStatus status, Priority priority) {
+                  Instant createdAt, Date dueDate, Project project, Category category,
+                  Status status, Priority priority) {
         this.title = title;
         this.description = description;
         this.createdBy = createdBy;

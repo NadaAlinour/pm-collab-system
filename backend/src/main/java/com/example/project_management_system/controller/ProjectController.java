@@ -1,5 +1,6 @@
 package com.example.project_management_system.controller;
 
+import com.example.project_management_system.dto.ProjectRequestDTO;
 import com.example.project_management_system.dto.ProjectResponseDTO;
 import com.example.project_management_system.entity.Project;
 import com.example.project_management_system.service.ProjectService;
@@ -23,6 +24,15 @@ public class ProjectController {
     {
         return ResponseEntity.ok((projectService.getProjectsByTenant(id)));
     }
+
+
+    @PostMapping("/tenants/{id}/projects/create")
+    public ResponseEntity<ProjectResponseDTO> createProject(@RequestBody ProjectRequestDTO dto)
+    {
+        return ResponseEntity.ok((projectService.saveProject(dto)));
+    }
+
+
 
 
 }

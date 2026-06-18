@@ -32,13 +32,8 @@ public class Project
     @OneToMany(mappedBy = "project")
     private List<Ticket> tickets = new ArrayList<>();
 
-    @OneToMany(mappedBy = "project")
-    private List<TicketStatus> statuses = new ArrayList<>();
 
-    @OneToMany(mappedBy = "project")
-    private List<TicketCategory> categories = new ArrayList<>();
-
-    protected Project() {}
+    public Project() {}
     public Project(String name, Tenant tenant)
     {
         this.name = name;
