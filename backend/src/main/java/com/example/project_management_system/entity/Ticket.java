@@ -37,7 +37,7 @@ public class Ticket
     private Instant createdAt;
 
     @Column(name = "due_date")
-    private Date dueDate;
+    private LocalDate dueDate;
 
 
     @ManyToOne
@@ -56,10 +56,10 @@ public class Ticket
     private Priority priority = Priority.MEDIUM;
 
 
-    protected Ticket() {}
+    public Ticket() {}
 
     public Ticket(String title, String description, Users createdBy, Users assignedTo,
-                  Instant createdAt, Date dueDate, Project project, Category category,
+                  Instant createdAt, LocalDate dueDate, Project project, Category category,
                   Status status, Priority priority) {
         this.title = title;
         this.description = description;

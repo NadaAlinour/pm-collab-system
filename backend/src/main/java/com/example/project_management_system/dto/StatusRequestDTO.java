@@ -1,4 +1,5 @@
 package com.example.project_management_system.dto;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,9 +9,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TicketDTO {
+public class StatusRequestDTO {
     private Long id;
-    private Long projectId;
-    private String status; // this is prolly wrong
-    private String category;
 }
