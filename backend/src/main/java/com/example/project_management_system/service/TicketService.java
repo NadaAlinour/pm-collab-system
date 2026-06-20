@@ -38,7 +38,7 @@ public class TicketService {
         List<TicketResponseDTO> ticketsRes = tickets.stream().map(t -> {
             StatusResponseDTO status = null;
             if (t.getStatus() != null)
-                status = new StatusResponseDTO(t.getStatus().getId(), t.getStatus().getName());
+                status = new StatusResponseDTO(t.getStatus().getId(), t.getStatus().getValue(), t.getStatus().getName());
 
 
             CategoryResponseDTO category = null;
@@ -109,6 +109,7 @@ public class TicketService {
             statusRes = new StatusResponseDTO();
             statusRes.setId(ticket.getStatus().getId());
             statusRes.setName(ticket.getStatus().getName());
+            statusRes.setValue(ticket.getStatus().getValue());
         }
 
         CategoryResponseDTO categoryRes = null;

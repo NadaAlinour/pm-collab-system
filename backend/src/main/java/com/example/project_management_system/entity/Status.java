@@ -14,13 +14,16 @@ public class Status
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
+    private String value;
+
     @Column(nullable = false)
     private String name;
 
 
     public Status() {}
-    public Status(String name)
+    public Status(String value, String name)
     {
-        this.name = name;
+        this.value = value; this.name = name;
     }
 }
