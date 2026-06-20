@@ -7,10 +7,9 @@ import com.example.project_management_system.dto.TicketRequestDTO;
 import com.example.project_management_system.dto.TicketResponseDTO;
 import com.example.project_management_system.service.TicketService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 
@@ -20,6 +19,11 @@ public class TicketController {
 
     public TicketController(TicketService ticketService) {
         this.ticketService = ticketService;
+    }
+
+    @GetMapping("/tenants/{id}/projects/{pid}/tickets/get/{projectId}")
+    public ResponseEntity<List<TicketResponseDTO>> getTicketsByTenant(@PathVariable Long projectId) {
+        return ResponseEntity.ok(ticketService.getTickets(projectId));
     }
 
     @PostMapping("/tenants/{id}/projects/{pid}/tickets/create")

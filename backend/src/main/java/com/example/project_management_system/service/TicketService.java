@@ -6,8 +6,9 @@ import com.example.project_management_system.dto.TicketRequestDTO;
 import com.example.project_management_system.dto.TicketResponseDTO;
 import com.example.project_management_system.entity.*;
 import com.example.project_management_system.repository.*;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TicketService {
@@ -28,6 +29,34 @@ public class TicketService {
     }
 
     // fetch all tickets (for now, later on filter and get by id)
+    // huh no i wanna get tickets by tenant id or all tickets or with filters lol
+    public List<TicketResponseDTO> getTickets(Long id) {
+        // will be returned as list of type ticket probably
+        List<Ticket> tickets = ticketRepo.findAllByProjectId(id);
+
+        // map tickets to list of TicketResponseDTO
+        List<TicketResponseDTO> ticketsRes = tickets.stream().map(t -> {
+            StatusResponseDTO status = null;
+            if (t.getStatus() != null)
+                status = new StatusResponseDTO(t.getStatus().getId(), t.getStatus().getName());
+
+
+            CategoryResponseDTO category = null;
+            if (t.getCategory() != null)
+                category = new CategoryResponseDTO(t.getCategory().getId(), t.getCategory().getName());
+
+
+            return new TicketResponseDTO(t.getId(), t.getProject().getId(), t.getTitle(), t.getDescription(),
+                    status, category, t.getPriority(),
+                    t.getDueDate(), t.getCreatedBy().getId());
+        }).toList();
+
+        return ticketsRes;
+
+    }
+
+
+
 
 
     // create ticket

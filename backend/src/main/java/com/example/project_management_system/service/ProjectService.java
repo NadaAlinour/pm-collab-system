@@ -22,7 +22,6 @@ public class ProjectService {
     }
 
     // fetch list of projects by tenant id
-    // add filtering later!
     public List<ProjectResponseDTO> getProjectsByTenant(Long tenant_id) {
         List<Project> projects = projectRepo.findAllByTenantId(tenant_id);
 
