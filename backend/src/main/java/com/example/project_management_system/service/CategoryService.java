@@ -18,7 +18,7 @@ public class CategoryService {
     public List<CategoryResponseDTO> getCategories() {
         List<Category> categories = categoryRepo.findAll();
 
-        // map status entity to status response dto
+        // map category entity to category response dto
         return categories.stream().map(c -> new CategoryResponseDTO(c.getId(), c.getName())).toList();
     }
 }
