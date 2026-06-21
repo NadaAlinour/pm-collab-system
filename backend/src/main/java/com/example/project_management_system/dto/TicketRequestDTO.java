@@ -20,5 +20,5 @@ public class TicketRequestDTO {
     private Priority priority;
     private LocalDate dueDate;
     private Long createdBy;
-    // and also the assignee later i guess
+    private Long assigneeId;
 }

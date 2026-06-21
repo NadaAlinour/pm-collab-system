@@ -32,7 +32,7 @@ public class UserService
     {
         Users user = new Users(dto.getFirstname(), dto.getLastname(), dto.getEmail(), passwordEncoder.encode(dto.getPassword()), tenantRepo.getReferenceById(1L), roleRepo.getReferenceById(1L));
         userRepo.saveAndFlush(user);
-        return new UserResponseDTO(dto.getFirstname(), dto.getLastname(), dto.getEmail(), 1L, 1L);
+        return new UserResponseDTO(user.getId(),dto.getFirstname(), dto.getLastname(), dto.getEmail(), 1L, 1L);
     }
 
 

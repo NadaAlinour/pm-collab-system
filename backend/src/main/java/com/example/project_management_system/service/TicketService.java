@@ -1,9 +1,6 @@
 package com.example.project_management_system.service;
 
-import com.example.project_management_system.dto.CategoryResponseDTO;
-import com.example.project_management_system.dto.StatusResponseDTO;
-import com.example.project_management_system.dto.TicketRequestDTO;
-import com.example.project_management_system.dto.TicketResponseDTO;
+import com.example.project_management_system.dto.*;
 import com.example.project_management_system.entity.*;
 import com.example.project_management_system.repository.*;
 import org.springframework.stereotype.Service;
@@ -45,10 +42,19 @@ public class TicketService {
             if (t.getCategory() != null)
                 category = new CategoryResponseDTO(t.getCategory().getId(), t.getCategory().getName());
 
+            UserResponseDTO createdBy = new UserResponseDTO(
+                    t.getCreatedBy().getId(), t.getCreatedBy().getFirstname(), t.getCreatedBy().getLastname(), t.getCreatedBy().getEmail(), t.getCreatedBy().getTenant().getId(), t.getCreatedBy().getRole().getId()
+            );
+
+            UserResponseDTO assignee = null;
+            if (t.getAssignedTo() != null)
+                    assignee = new UserResponseDTO(t.getAssignedTo().getId(), t.getAssignedTo().getFirstname(),
+                            t.getAssignedTo().getLastname(), t.getAssignedTo().getEmail(), t.getAssignedTo().getTenant().getId(), t.getAssignedTo().getRole().getId());
+
 
             return new TicketResponseDTO(t.getId(), t.getProject().getId(), t.getTitle(), t.getDescription(),
                     status, category, t.getPriority(),
-                    t.getDueDate(), t.getCreatedBy().getId());
+                    t.getDueDate(), createdBy, assignee);
         }).toList();
 
         return ticketsRes;
@@ -94,6 +100,15 @@ public class TicketService {
 
         reqTicket.setCreatedBy(user);
 
+        // assigned to
+        Users assignee = null;
+        if(dto.getAssigneeId() != null) {
+            assignee = userRepo.findById(dto.getAssigneeId())
+                    .orElseThrow(() -> new RuntimeException(("User not found")));
+        }
+
+        reqTicket.setAssignedTo(assignee);
+
         reqTicket.setTitle((dto.getTitle()));
         reqTicket.setDescription(dto.getDescription());
         reqTicket.setDueDate(dto.getDueDate());
@@ -119,8 +134,11 @@ public class TicketService {
             categoryRes.setName(ticket.getCategory().getName());
         }
 
+        // user response dto
+        UserResponseDTO createdBy = new UserResponseDTO(user.getId(), user.getFirstname(), user.getLastname(), user.getEmail(), user.getTenant().getId(), user.getRole().getId());
+        UserResponseDTO assignedTo = new UserResponseDTO(assignee.getId(), assignee.getFirstname(), assignee.getLastname(), assignee.getEmail(), assignee.getTenant().getId(), assignee.getRole().getId());
 
-        TicketResponseDTO resTicket = new TicketResponseDTO(ticket.getId(), ticket.getProject().getId(), ticket.getTitle(), ticket.getDescription(), statusRes, categoryRes, ticket.getPriority(), ticket.getDueDate(), ticket.getCreatedBy().getId());
+        TicketResponseDTO resTicket = new TicketResponseDTO(ticket.getId(), ticket.getProject().getId(), ticket.getTitle(), ticket.getDescription(), statusRes, categoryRes, ticket.getPriority(), ticket.getDueDate(), createdBy, assignedTo);
 
         return resTicket;
 

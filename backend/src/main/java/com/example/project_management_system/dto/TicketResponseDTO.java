@@ -1,5 +1,6 @@
 package com.example.project_management_system.dto;
 import com.example.project_management_system.entity.Priority;
+import com.example.project_management_system.entity.Users;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,5 +21,6 @@ public class TicketResponseDTO {
     private CategoryResponseDTO category;
     private Priority priority;
     private LocalDate dueDate;
-    private Long createdBy;
+    private UserResponseDTO createdBy;
+    private UserResponseDTO assignee;
 }

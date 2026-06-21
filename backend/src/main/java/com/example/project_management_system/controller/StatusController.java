@@ -17,7 +17,7 @@ public class StatusController {
     private final StatusService statusService;
     public StatusController(StatusService statusService) { this.statusService = statusService; }
 
-    @GetMapping("/status/fetch")
+    @GetMapping("/statuses/fetch")
     public ResponseEntity<List<StatusResponseDTO>> getStatuses() {
         return ResponseEntity.ok(statusService.getStatuses());
     }
