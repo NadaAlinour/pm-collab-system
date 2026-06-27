@@ -25,6 +25,35 @@ public class TicketService {
         this.userRepo = userRepo;
     }
 
+    // have one method for ticket by id, and another for tickets with params (filters etc)
+    public TicketResponseDTO getTicketById(Long id) {
+        Ticket t = ticketRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Ticket not found"));
+
+        // map ticket to ticket response dto
+        StatusResponseDTO status = null;
+        if (t.getStatus() != null)
+            status = new StatusResponseDTO(t.getStatus().getId(), t.getStatus().getValue(), t.getStatus().getName());
+
+
+        CategoryResponseDTO category = null;
+        if (t.getCategory() != null)
+            category = new CategoryResponseDTO(t.getCategory().getId(), t.getCategory().getName());
+
+        UserResponseDTO createdBy = new UserResponseDTO(
+                t.getCreatedBy().getId(), t.getCreatedBy().getFirstname(), t.getCreatedBy().getLastname(), t.getCreatedBy().getEmail(), t.getCreatedBy().getTenant().getId(), t.getCreatedBy().getRole().getId()
+        );
+
+        UserResponseDTO assignee = null;
+        if (t.getAssignedTo() != null)
+            assignee = new UserResponseDTO(t.getAssignedTo().getId(), t.getAssignedTo().getFirstname(),
+                    t.getAssignedTo().getLastname(), t.getAssignedTo().getEmail(), t.getAssignedTo().getTenant().getId(), t.getAssignedTo().getRole().getId());
+
+
+        return new TicketResponseDTO(t.getId(), t.getProject().getId(),
+                t.getTitle(), t.getDescription(), status, category, t.getPriority(), t.getDueDate(), createdBy, assignee);
+    }
+
     // fetch all tickets (for now, later on filter and get by id)
     // huh no i wanna get tickets by tenant id or all tickets or with filters lol
     public List<TicketResponseDTO> getTickets(Long id) {
@@ -105,9 +134,10 @@ public class TicketService {
         if(dto.getAssigneeId() != null) {
             assignee = userRepo.findById(dto.getAssigneeId())
                     .orElseThrow(() -> new RuntimeException(("User not found")));
+            reqTicket.setAssignedTo(assignee);
+
         }
 
-        reqTicket.setAssignedTo(assignee);
 
         reqTicket.setTitle((dto.getTitle()));
         reqTicket.setDescription(dto.getDescription());
@@ -136,7 +166,11 @@ public class TicketService {
 
         // user response dto
         UserResponseDTO createdBy = new UserResponseDTO(user.getId(), user.getFirstname(), user.getLastname(), user.getEmail(), user.getTenant().getId(), user.getRole().getId());
-        UserResponseDTO assignedTo = new UserResponseDTO(assignee.getId(), assignee.getFirstname(), assignee.getLastname(), assignee.getEmail(), assignee.getTenant().getId(), assignee.getRole().getId());
+
+        UserResponseDTO assignedTo = null;
+        if (assignee != null) {
+            assignedTo = new UserResponseDTO(assignee.getId(), assignee.getFirstname(), assignee.getLastname(), assignee.getEmail(), assignee.getTenant().getId(), assignee.getRole().getId());
+        }
 
         TicketResponseDTO resTicket = new TicketResponseDTO(ticket.getId(), ticket.getProject().getId(), ticket.getTitle(), ticket.getDescription(), statusRes, categoryRes, ticket.getPriority(), ticket.getDueDate(), createdBy, assignedTo);
 

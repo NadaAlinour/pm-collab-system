@@ -21,12 +21,17 @@ public class TicketController {
         this.ticketService = ticketService;
     }
 
-    @GetMapping("/tenants/{id}/projects/{pid}/tickets/get/{projectId}")
+    @GetMapping("/tickets/get/{projectId}")
     public ResponseEntity<List<TicketResponseDTO>> getTicketsByTenant(@PathVariable Long projectId) {
         return ResponseEntity.ok(ticketService.getTickets(projectId));
     }
 
-    @PostMapping("/tenants/{id}/projects/{pid}/tickets/create")
+    @GetMapping("/ticket/get/{id}")
+    public ResponseEntity<TicketResponseDTO> getTicketById(@PathVariable Long id) {
+        return ResponseEntity.ok(ticketService.getTicketById(id));
+    }
+
+    @PostMapping("/tickets/create")
     public ResponseEntity<TicketResponseDTO> createTicket(@RequestBody TicketRequestDTO dto)
     {
         return ResponseEntity.ok((ticketService.saveTicket(dto)));
